@@ -3,7 +3,7 @@
 Start Web application; endpoint
 returns 'C is Fun'
 """
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 
@@ -57,7 +57,7 @@ def render_number_template(n):
     displays html page with number
     parameter
     """
-    return render_template('5-number.html', values=n)
+    return render_template('5-number.html', value=n)
 
 
 if __name__ == "__main__":

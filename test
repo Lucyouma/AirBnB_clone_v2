@@ -1,0 +1,8 @@
+CREATE TABLE states_new (
+    name varchar(128) NOT NULL,
+    id varchar(60) NOT NULL,
+    created_at datetime DEFAULT NULL,
+    updated_at datetime DEFAULT NULL,
+    PRIMARY KEY (id)
+);
+

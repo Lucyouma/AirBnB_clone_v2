@@ -84,7 +84,8 @@ class DBStorage:
 
     def close(self):
         """Closes the session"""
-        self.__session.remove()
+        if self.__session:
+            self.__session.close()
 
     def get(self, cls, id):
         """Retrieves a specific object by class
@@ -105,7 +106,7 @@ class DBStorage:
         total = 0
         if cls is None:
             for class_type in class_mapping.values():
-                total += len(models.storage.all(class_type))
+                total += len(models.storage.all(class_type).values())
         else:
-            total = len(models.storage.all(cls))
+            total = len(models.storage.all(cls).values())
         return total

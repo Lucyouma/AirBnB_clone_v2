@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 import models
-from models.base_model import Base, BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column
 from sqlalchemy.orm import relationship
 from os import getenv
 
 
-class State(Base, BaseModel):
+class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
 
@@ -17,6 +17,13 @@ class State(Base, BaseModel):
                               cascade="all, delete, delete-orphan")
     else:
         name = ""
+        cities = ""
+
+    def __init__(self, *args, **kwargs):
+        """
+        state initialization
+        """
+        super().__init__(*args, **kwargs)
 
         @property
         def cities(self):

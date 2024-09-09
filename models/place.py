@@ -62,7 +62,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """
-            Returns a list of Review instances 
+            Returns a list of Review instances
             associated with this Place
             """
             from models.review import Review
@@ -72,10 +72,9 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """
-            Returns a list of Amenity instances 
+            Returns a list of Amenity instances
             associated with this Place
             """
             from models.amenity import Amenity
             return [amenity for amenity in models.storage.all(Amenity).values()
                     if amenity.id in self.amenity_ids]
-

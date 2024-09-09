@@ -32,9 +32,7 @@ class State(BaseModel, Base):
         """
         all_cities = models.storage.all("City")
         cities = []
-        for city in all_cities:
-            if all_cities[city].state_id == self.id:
-                cities.append(all_cities[city])
+        for city in all_cities.values():
+            if city.state_id == self.id:
+                cities.append(city)
         return cities
-        """return[city for city in models.storage.all('City').items()
-                if city.state_id == self.id]"""

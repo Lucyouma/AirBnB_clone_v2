@@ -34,7 +34,8 @@ class FileStorage:
             # object_dict = {}
         else:
             object_dict = {}
-            # return {k: v for k, v in self.__objects.items() if isinstance(v, cls) or cls == v.__class__.__name__}
+            # return {k: v for k, v in self.__objects.items()
+            # if isinstance(v, cls) or cls == v.__class__.__name__}
             for k, v in self.__objects.items():
                 if cls == v.__class__ or cls == v.__class__.__name__:
                     object_dict[k] = v

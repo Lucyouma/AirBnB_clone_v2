@@ -34,6 +34,7 @@ class BaseModel:
             self.updated_at = datetime.now()
             storage.new(self)
         else:
+            kwargs['id'] = str(uuid.uuid4())
             if 'updated_at' in kwargs:
                 kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                          time)
@@ -53,6 +54,7 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
+        storage.new(self)
         storage.save()
 
     def to_dict(self):
@@ -61,8 +63,18 @@ class BaseModel:
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
+        if isinstance(self.created_at, datetime):
+            dictionary['created_at'] = self.created_at.isoformat()
+        else:
+            dictionary['created_at'] = str(self.created_at)
+        if isinstance(self.updated_at, datetime):
+            dictionary['updated_at'] = self.updated_at.isoformat()
+        else:
+            dictionary['updated_at'] = str(self.updated_at)
+
+        if '_sa_instance_state' in dictionary:
+            dictionary.pop('_sa_instance_state')
+
         return dictionary
 
     def delete(self):

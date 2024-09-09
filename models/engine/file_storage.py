@@ -30,17 +30,21 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of all objects currently in storage"""
         if cls is None:
+            return self.__objects
+            # object_dict = {}
+        else:
             object_dict = {}
+            # return {k: v for k, v in self.__objects.items() if isinstance(v, cls) or cls == v.__class__.__name__}
             for k, v in self.__objects.items():
                 if cls == v.__class__ or cls == v.__class__.__name__:
                     object_dict[k] = v
             return object_dict
-        return self.__objects
 
     def new(self, obj):
         """Adds a new object to the storage dictionary"""
         key = f"{obj.to_dict()['__class__']}.{obj.id}"
-        self.all()[key] = obj
+        # self.all()[key] = obj
+        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
         """Serializes the storage dictionary to a file"""
@@ -64,7 +68,7 @@ class FileStorage:
         if obj:
             object_key = obj.__class__.__name__ + '.' + obj.id
             if object_key in self.__objects:
-                del self._objects[object_key]
+                del self.__objects[object_key]
 
     def close(self):
         """

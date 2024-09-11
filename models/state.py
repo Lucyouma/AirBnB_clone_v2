@@ -17,7 +17,6 @@ class State(BaseModel, Base):
                               cascade="all, delete, delete-orphan")
     else:
         name = ""
-        cities = ""
 
     def __init__(self, *args, **kwargs):
         """

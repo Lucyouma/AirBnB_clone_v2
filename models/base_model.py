@@ -32,17 +32,30 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            # storage.new(self)
         else:
-            kwargs['id'] = str(uuid.uuid4())
-            if 'updated_at' in kwargs:
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                         time)
+            self.id = str(uuid.uuid4())
+
             if 'created_at' in kwargs:
-                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                         time)
+                try:
+                    self.created_at = datetime.strptime(kwargs['created_at'],
+                                                        time)
+                except Exception as e:
+                    print("invalid date format for created at")
+            else:
+                self.created_at = datetime.now()
+            if 'updated_at' in kwargs:
+                try:
+                    self.updated_at = datetime.strptime(kwargs['updated_at'],
+                                                        time)
+                except Exception as e:
+                    print("Invalid date format for updated_at")
+            else:
+                self.updated_at = datetime.now()
+
             if '__class__' in kwargs:
                 del kwargs['__class__']
+
             self.__dict__.update(kwargs)
 
     def __str__(self):

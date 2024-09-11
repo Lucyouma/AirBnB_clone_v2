@@ -25,18 +25,19 @@ class State(BaseModel, Base):
         """
         super().__init__(self, *args, **kwargs)
 
-    @property
-    def cities(self):
-        """
-        Retrieve cities from file storage
-        """
-        """
-        all_cities = models.storage.all("City")
-        cities = []
-        for city in all_cities.values():
-            if city.state_id == self.id:
-                cities.append(city)
-        return cities
-        """
-        return [city for city in models.storage.all("City").values()
-                if city.state_id == self.id]
+    if models.storage_t != "db":
+        @property
+        def cities(self):
+            """
+            Retrieve cities from file storage
+            """
+            """
+            all_cities = models.storage.all("City")
+            cities = []
+            for city in all_cities.values():
+                if city.state_id == self.id:
+                    cities.append(city)
+            return cities
+            """
+            return [city for city in models.storage.all("City").values()
+                    if city.state_id == self.id]

@@ -13,7 +13,8 @@ def close_db(error):
     """
     closes Sqlalachemy session
     """
-    storage.close()
+    if storage is not None:
+        storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
